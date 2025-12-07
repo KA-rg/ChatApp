@@ -1,22 +1,52 @@
 const express = require('express');
+const chalk = require('chalk');
+const cors = require('cors');
+const dotenv = require('dotenv');
+
+//dotenv in our server
+dotenv.config();
+
 
 const app = express();
-const chalk = require('chalk');
-
 const PORT = 5000;
+
+//Middlewares
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+
+//Routes in server file
+app.use('/api/messages',require('./routes/messageRoutes'));
 
 // root route
 app.get('/', (req, res) => {
-    res.send('Hello Server');
+    res.send({
+        message: " Chat API Server",
+        version: '1.0.0',
+        endpoints: {
+            getMessages: "GET /api/messages",
+            createMessages: "POST /api/messages",
+            deleteMessages: "DELETE /api/messages",
+        }
+    })
 });
 
-// Test route
-app.get('/test', (req, res) => {
-    res.json({
-        message: 'Server is working perfectly',
-        timestamp: new Date(),
-        status: 'success'
-    });
+// Error handling
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found"
+  });
+});
+
+// Global error handler
+app.use((err, req, res, next) => {
+  console.log(err.stack);
+  res.status(500).json({
+    success: false,
+    message: "Something went wrong",
+    error:err.message,
+  });
 });
 
 app.listen(PORT, () => {
