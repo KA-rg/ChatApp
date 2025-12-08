@@ -1,54 +1,116 @@
-const express = require('express');
-const chalk = require('chalk');
-const cors = require('cors');
-const dotenv = require('dotenv');
+// 🔄 UPDATED FILE
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const http = require("http"); // ⭐ NEW - Import http
+const { Server } = require("socket.io"); // ⭐ NEW - Import Socket.io
+const { addMessage } = require("./controllers/messageControllers"); // ⭐ NEW
 
-//dotenv in our server
 dotenv.config();
 
-
 const app = express();
-const PORT = 5000;
-
-//Middlewares
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
-
-//Routes in server file
-app.use('/api/messages',require('./routes/messageRoutes'));
-
-// root route
-app.get('/', (req, res) => {
-    res.send({
-        message: " Chat API Server",
-        version: '1.0.0',
-        endpoints: {
-            getMessages: "GET /api/messages",
-            createMessages: "POST /api/messages",
-            deleteMessages: "DELETE /api/messages",
-        }
-    })
+const server = http.createServer(app); // ⭐ NEW - Create HTTP server
+const io = new Server(server, {
+  // ⭐ NEW - Create Socket.io instance
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
 });
 
-// Error handling
+const PORT = process.env.PORT || 5000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public")); // ⭐ NEW - Serve static files from public folder
+
+// Routes
+app.use("/api/messages", require("./routes/messageRoutes"));
+
+// Root route
+app.get("/", (req, res) => {
+  res.json({
+    message: "Chat API Server with Socket.io", // 🔄 UPDATED
+    version: "2.0.0", // 🔄 UPDATED
+    endpoints: {
+      getMessages: "GET /api/messages",
+      createMessage: "POST /api/messages",
+      deleteMessages: "DELETE /api/messages",
+      testClient: "GET /index.html", // ⭐ NEW
+    },
+  });
+});
+
+// ⭐ NEW - Socket.io connection handling
+io.on("connection", (socket) => {
+  console.log("✅ User connected:", socket.id);
+
+  // Send welcome message to connected user
+  socket.emit("message", {
+    user: "System",
+    text: "Welcome to the chat!",
+    timestamp: new Date().toISOString(),
+  });
+
+  // Notify others that new user joined
+  socket.broadcast.emit("message", {
+    user: "System",
+    text: "A new user has joined the chat",
+    timestamp: new Date().toISOString(),
+  });
+
+  // Listen for sendMessage event
+  socket.on("sendMessage", (data) => {
+    console.log("📩 Message received:", data);
+
+    // Add message to database
+    const newMessage = addMessage(data);
+
+    // Broadcast message to all connected clients
+    io.emit("receiveMessage", newMessage);
+  });
+
+  // Listen for typing event
+  socket.on("typing", (data) => {
+    socket.broadcast.emit("userTyping", data);
+  });
+
+  // Handle disconnection
+  socket.on("disconnect", () => {
+    console.log("❌ User disconnected:", socket.id);
+
+    // Notify others that user left
+    io.emit("message", {
+      user: "System",
+      text: "A user has left the chat",
+      timestamp: new Date().toISOString(),
+    });
+  });
+});
+
+// 404 handler
 app.use((req, res) => {
   res.status(404).json({
     success: false,
-    message: "Route not found"
+    message: "Route not found",
   });
 });
 
-// Global error handler
+// Error handler
 app.use((err, req, res, next) => {
-  console.log(err.stack);
+  console.error(err.stack);
   res.status(500).json({
     success: false,
-    message: "Something went wrong",
-    error:err.message,
+    message: "Something went wrong!",
+    error: err.message,
   });
 });
 
-app.listen(PORT, () => {
-    console.log(chalk.green(`Server running on port ${PORT}`));
+// 🔄 UPDATED - Start server with Socket.io
+server.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🔌 Socket.io enabled`); // ⭐ NEW
+  console.log(`Environment: ${process.env.NODE_ENV}`);
 });
