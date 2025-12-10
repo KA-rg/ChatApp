@@ -1,0 +1,45 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Build output
+dist/
+build/
+
+# Cache
+.cache/
+.temp/
+.tmp/
+
+# Debug files
+.DS_Store
+*.pid
+*.seed
+*.pid.lock
+
+# IDE / Editor folders
+.vscode/
+.idea/
+
+# npm package lock (optional)
+package-lock.json
+nodemon.json
+
+# TypeScript (if used)
+*.tsbuildinfo
+
+# Other
+coverage/
