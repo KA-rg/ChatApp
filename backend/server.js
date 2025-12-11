@@ -111,6 +111,4 @@ app.use((err, req, res, next) => {
 // 🔄 UPDATED - Start server with Socket.io
 server.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`🔌 Socket.io enabled`); // ⭐ NEW
-  console.log(`Environment: ${process.env.NODE_ENV}`);
 });
