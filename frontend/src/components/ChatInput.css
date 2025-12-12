@@ -1,0 +1,91 @@
+/* ⭐ NEW FILE - Chat Input Styles */
+.chat-input-container {
+  display: flex;
+  padding: 20px 25px;
+  background: white;
+  border-top: 2px solid #f0f0f0;
+  gap: 12px;
+  align-items: center;
+}
+
+.username-input {
+  flex: 0 0 160px;
+  padding: 14px 18px;
+  border: 2px solid #667eea;
+  border-radius: 12px;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+
+.username-input:focus {
+  border-color: #764ba2;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.message-input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 2px solid #e1e8ed;
+  border-radius: 12px;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s;
+  resize: none;
+  font-family: inherit;
+}
+
+.message-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.send-button {
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.send-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.send-button:active {
+  transform: translateY(0);
+}
+
+.send-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 768px) {
+  .chat-input-container {
+    padding: 15px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .username-input {
+    flex: 1 1 100%;
+  }
+
+  .message-input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .send-button {
+    padding: 14px 24px;
+  }
+}

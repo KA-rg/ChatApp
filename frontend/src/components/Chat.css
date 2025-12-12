@@ -1,0 +1,147 @@
+/* 🔄 UPDATED FILE - Remove online count styles */
+.chat-container {
+  background: white;
+  width: 100%;
+  max-width: 900px;
+  height: 90vh;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.header-info h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+/* 🗑️ REMOVED - .online-count styles */
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.status-dot.connected {
+  background: #4caf50;
+  animation: pulse 2s infinite;
+}
+
+.status-dot.disconnected {
+  background: #f44336;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.typing-indicator {
+  padding: 12px 20px;
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.typing-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.typing-dots span {
+  width: 6px;
+  height: 6px;
+  background: #999;
+  border-radius: 50%;
+  animation: typing 1.4s infinite;
+}
+
+.typing-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .chat-container {
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .header-left {
+    gap: 10px;
+  }
+
+  .header-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .header-info h1 {
+    font-size: 20px;
+  }
+
+  .status {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}

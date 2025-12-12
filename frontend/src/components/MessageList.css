@@ -1,0 +1,162 @@
+/* 🔄 UPDATED FILE */
+.messages-container {
+  flex: 1;
+  padding: 25px;
+  overflow-y: auto;
+  background: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+}
+
+.no-messages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #999;
+}
+
+.no-messages-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+}
+
+.no-messages h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #666;
+}
+
+.no-messages p {
+  font-size: 16px;
+  color: #999;
+}
+
+.message {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  max-width: 65%;
+  word-wrap: break-word;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ⭐ UPDATED - System messages (centered) */
+.message.system {
+  background: #e3e8ef;
+  color: #5a6c7d;
+  font-size: 14px;
+  text-align: center;
+  max-width: 85%;
+  align-self: center;
+  font-style: italic;
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+
+/* ⭐ UPDATED - Received messages (left side, white) */
+.message.received {
+  background: white;
+  border: 1px solid #e1e8ed;
+  align-self: flex-start;  /* Left side */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* ⭐ NEW - Sent messages (right side, purple) */
+.message.sent {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  align-self: flex-end;  /* Right side */
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+/* ⭐ UPDATED - Username color different for sent/received */
+.message.received .message-user {
+  font-weight: 700;
+  font-size: 13px;
+  color: #667eea;
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+}
+
+.message.sent .message-user {
+  font-weight: 700;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);  /* White for sent messages */
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+}
+
+.message-text {
+  font-size: 15px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* ⭐ UPDATED - Different text colors */
+.message.received .message-text {
+  color: #2d3748;
+}
+
+.message.sent .message-text {
+  color: white;
+}
+
+.message-time {
+  font-size: 11px;
+  margin-top: 6px;
+  text-align: right;
+}
+
+/* ⭐ UPDATED - Different time colors */
+.message.received .message-time {
+  color: #a0aec0;
+}
+
+.message.sent .message-time {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.messages-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: #f1f3f5;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background: #ced4da;
+  border-radius: 4px;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+  background: #adb5bd;
+}
+
+@media (max-width: 768px) {
+  .messages-container {
+    padding: 15px;
+  }
+
+  .message {
+    max-width: 80%;
+  }
+
+  .message.system {
+    max-width: 90%;
+  }
+}
