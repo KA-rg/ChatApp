@@ -1,7 +1,7 @@
-#﻿📱 ChitChat — Real-Time MERN Chat Application
+#﻿ 📱 ChitChat — Real-Time MERN Chat Application
  ![Screenshot](screenshot.png)
 
-##A fully responsive real-time chat app built using the MERN Stack (MongoDB, Express, React, Node) along with Socket.io for instant messaging.
+## A fully responsive real-time chat app built using the MERN Stack (MongoDB, Express, React, Node) along with Socket.io for instant messaging.
 ChitChat provides a smooth chatting experience with typing indicators, online user status, and fast message delivery.
 
 <p align="center"> <img src="https://img.shields.io/badge/MERN-Stack-blue" /> <img src="https://img.shields.io/badge/Socket.io-RealTime-green" /> <img src="https://img.shields.io/badge/React-Frontend-blueviolet" /> <img src="https://img.shields.io/badge/Node.js-Backend-success" /> <img src="https://img.shields.io/badge/MongoDB-Database-brightgreen" /> </p>
@@ -96,4 +96,5 @@ Contributions, issues, and feature requests are welcome!
 
 
 If you like this project, please star ⭐ the repository — it motivates me to build more!
+
 
