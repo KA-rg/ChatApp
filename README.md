@@ -1,11 +1,11 @@
-![Screenshot](screenshot.png)
+# 📱 ChitChat — Real-Time MERN Chat Application
 
-#﻿ 📱 ChitChat — Real-Time MERN Chat Application
+![image](screenshot.png)
 
 ## A fully responsive real-time chat app built using the MERN Stack (MongoDB, Express, React, Node) along with Socket.io for instant messaging.
 ChitChat provides a smooth chatting experience with typing indicators, online user status, and fast message delivery.
 
-##🎥 Live Demo / Preview
+## 🎥 Live Demo / Preview
 
 [(Website link)](https://chat-app-phi-five-91.vercel.app/)
 
@@ -97,6 +97,7 @@ Contributions, issues, and feature requests are welcome!
 
 
 If you like this project, please star ⭐ the repository — it motivates me to build more!
+
 
 
 
