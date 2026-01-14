@@ -4,7 +4,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const http = require("http"); // ⭐ NEW - Import http
 const { Server } = require("socket.io"); // ⭐ NEW - Import Socket.io
-const { addMessage } = require("./controllers/messageControllers"); // ⭐ NEW
+const { addMessage, deleteMessageById } = require("./controllers/messageControllers"); // ⭐ NEW
 
 dotenv.config();
 
@@ -28,6 +28,9 @@ app.use(express.static("public")); // ⭐ NEW - Serve static files from public f
 
 // Routes
 app.use("/api/messages", require("./routes/messageRoutes"));
+
+// Attach io to app so controllers can emit events on HTTP operations
+app.set('io', io);
 
 // Root route
 app.get("/", (req, res) => {
@@ -75,6 +78,20 @@ io.on("connection", (socket) => {
   // Listen for typing event
   socket.on("typing", (data) => {
     socket.broadcast.emit("userTyping", data);
+  });
+
+  // Listen for delete message request (from clients)
+  socket.on("deleteMessage", (data) => {
+    console.log("🔔 deleteMessage event received:", data);
+    const deleted = deleteMessageById(data.id);
+    if (deleted) {
+      console.log("✅ Message deleted:", deleted);
+      io.emit("messageDeleted", deleted);
+    } else {
+      console.log("⚠️ Message to delete not found:", data.id);
+      // Notify requester that delete failed
+      socket.emit("messageDeleteFailed", { id: data.id, message: "Not found" });
+    }
   });
 
   // Handle disconnection

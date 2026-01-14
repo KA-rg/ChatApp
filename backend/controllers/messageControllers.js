@@ -87,20 +87,69 @@ const deleteAllMessages = (req, res) => {
   }
 };
 
-const addMessage=(messageData)=>{
-  const newMessage={
-    id:messages.length+1,
-    text:messageData.text,
-    user:messageData.user,
-    timestamp: new Date().toISOString()
+const addMessage = (messageData) => {
+  const newMessage = {
+    id: messages.length + 1,
+    text: messageData.text,
+    user: messageData.user,
+    timestamp: new Date().toISOString(),
   };
   messages.push(newMessage);
   return newMessage;
-}
+};
+
+// DELETE a single message by id
+const deleteMessage = (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const index = messages.findIndex((m) => m.id === id);
+    if (index === -1) {
+      return res.status(404).json({
+        success: false,
+        message: "Message not found",
+      });
+    }
+    const deleted = messages.splice(index, 1)[0];
+
+    console.log('🗑️ HTTP deleteMessage executed for id:', deleted.id);
+
+    // If Socket.io instance is attached to app, broadcast the deletion
+    try {
+      const io = req.app.get('io');
+      if (io) {
+        io.emit('messageDeleted', deleted);
+      }
+    } catch (e) {
+      // ignore emitter errors
+      console.warn('Could not emit messageDeleted from HTTP delete:', e.message);
+    }
+
+    res.json({
+      success: true,
+      message: "Message deleted",
+      data: deleted,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+      error: error.message,
+    });
+  }
+};
+
+// Helper to delete by id programmatically (for socket handlers)
+const deleteMessageById = (id) => {
+  const index = messages.findIndex((m) => m.id === Number(id));
+  if (index === -1) return null;
+  return messages.splice(index, 1)[0];
+};
 
 module.exports = {
   getMessages,
   createMessage,
   deleteAllMessages,
-  addMessage
+  deleteMessage,
+  addMessage,
+  deleteMessageById,
 };
