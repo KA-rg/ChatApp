@@ -121,6 +121,65 @@
   text-align: right;
 }
 
+/* Small footer to hold time + actions */
+.message-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+/* Pending delete state */
+.message.pending {
+  opacity: 0.85;
+  background: linear-gradient(135deg, #f8f8f9 0%, #eeeefe 100%);
+  border: 1px dashed #e0e0e0;
+}
+
+.message-text.faded {
+  color: #9aa3b2;
+  text-decoration: line-through;
+}
+
+.pending-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.undo-btn {
+  background: transparent;
+  border: 1px solid #667eea;
+  color: #667eea;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.undo-btn:hover {
+  background: rgba(102,126,234,0.06);
+}
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: #ff6b6b;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+
+.delete-btn:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+.message.sent .delete-btn {
+  color: rgba(255, 255, 255, 0.9);
+}
+
 /* ⭐ UPDATED - Different time colors */
 .message.received .message-time {
   color: #a0aec0;

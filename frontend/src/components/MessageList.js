@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import "./MessageList.css";
 
-function MessageList({ messages, currentUser }) {
+function MessageList({ messages, currentUser, onRequestDelete, onUndoDelete }) {
   // ⭐ Add currentUser prop
   const messagesEndRef = useRef(null);
 
@@ -29,26 +29,50 @@ function MessageList({ messages, currentUser }) {
 
           return (
             <div
-              key={index}
+              key={msg.id || index}
               className={`message ${
                 msg.type === "system"
                   ? "system"
                   : isSentByMe
                   ? "sent" // ⭐ My message - right side
                   : "received" // ⭐ Others' message - left side
-              }`}
+              } ${msg.pendingDelete ? 'pending' : ''}`}
             >
               {msg.type === "system" ? (
                 <div className="message-text">{msg.text}</div>
               ) : (
                 <>
                   <div className="message-user">{msg.user}</div>
-                  <div className="message-text">{msg.text}</div>
-                  <div className="message-time">
-                    {new Date(msg.timestamp).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                  <div className={`message-text ${msg.pendingDelete ? 'faded' : ''}`}>{msg.text}</div>
+
+                  <div className="message-footer">
+                    <div className="message-time">
+                      {new Date(msg.timestamp).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </div>
+
+                    {msg.pendingDelete ? (
+                      <div className="pending-actions">
+                        <span className="pending-label">Deleted — </span>
+                        {onUndoDelete && (
+                          <button className="undo-btn" onClick={() => onUndoDelete(msg.id)}>
+                            Undo
+                          </button>
+                        )}
+                      </div>
+                    ) : (
+                      isSentByMe && onRequestDelete && (
+                        <button
+                          className="delete-btn"
+                          onClick={() => onRequestDelete(msg.id)}
+                          title="Delete message"
+                        >
+                          🗑️
+                        </button>
+                      )
+                    )}
                   </div>
                 </>
               )}
